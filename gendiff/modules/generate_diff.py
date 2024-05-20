@@ -22,15 +22,15 @@ def generate_diff(file1, file2):
 def prepare_result(same, diff1, diff2):
     result = []
     for key in same:
-        same_to_str = f'  {key}: {same[key]}'
+        same_to_str = f'    {key}: {same[key]}'.lower()
         result.append(same_to_str)
     for key in diff1:
         if diff1[key] is not None:
-            diff1_to_str = f'- {key}: {diff1[key]}'
+            diff1_to_str = f'  - {key}: {diff1[key]}'.lower()
             result.append(diff1_to_str)
     for key in diff2:
         if diff2[key] is not None:
-            diif2_to_str = f'+ {key}: {diff2[key]}'
+            diif2_to_str = f'  + {key}: {diff2[key]}'.lower()
             result.append(diif2_to_str)
-    result = sorted(result, key=lambda x: x[2:3])
+    result = sorted(result, key=lambda x: x[4:5])
     return '{\n' + '\n'.join(result) + '\n}'
