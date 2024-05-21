@@ -2,3 +2,4 @@
 [![Actions Status](https://github.com/alldost/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/alldost/python-project-50/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/16005ca9e19412f1d11d/maintainability)](https://codeclimate.com/github/alldost/python-project-50/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/16005ca9e19412f1d11d/test_coverage)](https://codeclimate.com/github/alldost/python-project-50/test_coverage)
+[![Python CI](https://github.com/alldost/python-project-50/actions/workflows/python-app.yml/badge.svg)](https://github.com/alldost/python-project-50/actions)
