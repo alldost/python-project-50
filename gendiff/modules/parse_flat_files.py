@@ -1,14 +1,21 @@
 import json
+import yaml
 
 
-def parse_and_compare_json(file1, file2):
+def parse_and_compare(file1, file2):
     same = dict()
     diff1 = dict()
     diff2 = dict()
 
     with open(file1) as f1, open(file2) as f2:
-        dict1 = json.load(f1)
-        dict2 = json.load(f2)
+
+        if file1.endswith(".json"):
+            dict1 = json.load(f1)
+            dict2 = json.load(f2)
+
+        if file1.endswith(".yaml") or file1.endswith(".yml"):
+            dict1 = yaml.safe_load(f1)
+            dict2 = yaml.safe_load(f2)
 
         for key in set(dict1) | set(dict2):
 

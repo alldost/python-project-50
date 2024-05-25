@@ -1,19 +1,9 @@
-from gendiff.modules.parse_json import parse_and_compare_json
-from gendiff.modules.parse_yaml import parse_and_compare_yaml
+from gendiff.modules.parse_flat_files import parse_and_compare
 
 
 def generate_diff(file1, file2):
-    if file1.endswith(".json"):
-        same, diff1, diff2 = parse_and_compare_json(file1, file2)
+    same, diff1, diff2 = parse_and_compare(file1, file2)
 
-    if file1.endswith(".yaml") or file1.endswith(".yml"):
-        same, diff1, diff2 = parse_and_compare_yaml(file1, file2)
-
-    result = prepare_result(same, diff1, diff2)
-    return result
-
-
-def prepare_result(same, diff1, diff2):
     result = []
 
     for key, value in same.items():
