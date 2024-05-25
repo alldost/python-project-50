@@ -17,12 +17,15 @@ def result():
         yield result"""
 
 
-FILE1 = 'tests/fixtures/file1.json'
-FILE2 = 'tests/fixtures/file2.json'
+FILE1_JSON = 'tests/fixtures/file1.json'
+FILE2_JSON = 'tests/fixtures/file2.json'
+FILE1_YAML = 'tests/fixtures/file1.yml'
+FILE2_YAML = 'tests/fixtures/file2.yaml'
 RESULT = 'tests/fixtures/generated_diff.txt'
 
 
 def test_generate_diff():
     with open(RESULT) as result:
         result_content = result.read()
-        assert generate_diff(FILE1, FILE2) == result_content
+        assert generate_diff(FILE1_JSON, FILE2_JSON) == result_content
+        assert generate_diff(FILE1_YAML, FILE2_YAML) == result_content
