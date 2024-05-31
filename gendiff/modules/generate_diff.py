@@ -1,30 +1,58 @@
 from gendiff.modules.parse import parse
 
 
-def generate_diff(file1, file2):
+def generate_diff(file1, file2, formater=None):
     diff = dict()
     dict1, dict2 = parse(file1, file2)
+    keys = sorted(set(dict1) | set(dict2))
 
-    for key in set(dict1) | set(dict2):
+    for key in keys:
+        value1 = dict1.get(key)
+        value2 = dict2.get(key)
 
-        if dict1.get(key) == dict2.get(key):
-            diff["  " + key] = dict1[key]
+        if isinstance(value1, dict) and isinstance(value2, dict):
+            diff[key] = generate_diff(value1, value2)
 
         else:
-            if key in dict1:
-                diff["- " + key] = dict1.get(key)
-            if key in dict2:
-                diff["+ " + key] = dict2.get(key)
+            if value1 == value2:
+                diff[key] = value1
+            else:
+                if key in dict1:
+                    diff["- " + key] = value1
+                if key in dict2:
+                    diff["+ " + key] = value2
 
-    return stylish(diff)
+    if formater is None:
+        formater = stylish
+
+    # return diff
+    return formater(diff)
 
 
-def stylish(diff):
-    result = []
+def stylish(diff_dict, level=1):
+    result = ''
 
-    for key, value in diff.items():
-        result.append(f'  {key}: {value}'.lower())
+    def stylish_level(value, current_level):
+        level_result = ''
 
-    result = sorted(result, key=lambda x: x[4:5])
+        if not isinstance(value, dict):
+            return str(value)
 
-    return '{\n' + '\n'.join(result) + '\n}'
+        else:
+            spaces_number = 4
+            level_result += '{\n'
+
+            for key, value in value.items():
+
+                if key.startswith('+') or key.startswith('-'):
+                    level_result += f'{(current_level * spaces_number - 2) * " "}{key}: '
+                else:
+                    level_result += f'{current_level * spaces_number * " "}{key}: '
+                level_result += stylish_level(value, current_level + level) + '\n'
+            level_result += f'{spaces_number * (current_level - level) * " "}' + '}'
+
+        return level_result
+
+    result += stylish_level(diff_dict, level)
+
+    return result
