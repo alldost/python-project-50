@@ -1,31 +1,29 @@
-# import pytest
+import pytest
 from gendiff.generate_diff import generate_diff
 
-"""@pytest.fixture
-def file1():
-    with open('tests/fixtures/file1.json') as file1:
-        yield file1
 
-@pytest.fixture
-def file2():
-    with open('tests/fixtures/file2.json') as file2:
-        yield file2
+JSON_FLAT1 = 'tests/fixtures/first_flat_file.json'
+JSON_FLAT2 = 'tests/fixtures/second_flat_file.json'
+YAML_FLAT1 = 'tests/fixtures/first_flat_file.yml'
+YAML_FLAT2 = 'tests/fixtures/second_flat_file.yaml'
+FLAT_RESULT = 'tests/fixtures/flat_diff.txt'
 
-@pytest.fixture
-def result():
-    with open('tests/fixtures/generate_diff_result') as result:
-        yield result"""
+JSON_NESTED1 = 'tests/fixtures/first_nested_file.json'
+JSON_NESTED2 = 'tests/fixtures/second_nested_file.json'
+YAML_NESTED1 = 'tests/fixtures/first_nested_file.yml'
+YAML_NESTED2 = 'tests/fixtures/second_nested_file.yaml'
+NESTED_RESULT = 'tests/fixtures/nested_diff.txt'
 
-
-FILE1_JSON = 'tests/fixtures/file1.json'
-FILE2_JSON = 'tests/fixtures/file2.json'
-FILE1_YAML = 'tests/fixtures/file1.yml'
-FILE2_YAML = 'tests/fixtures/file2.yaml'
-RESULT = 'tests/fixtures/generated_diff.txt'
+PARAMETRIZE_INPUT = [
+    (JSON_FLAT1, JSON_FLAT2, FLAT_RESULT),
+    (YAML_FLAT1, YAML_FLAT2, FLAT_RESULT),
+    (JSON_NESTED1, JSON_NESTED2, NESTED_RESULT),
+    (YAML_NESTED1, YAML_NESTED2, NESTED_RESULT),
+]
 
 
-def test_generate_diff():
-    with open(RESULT) as result:
-        result_content = result.read()
-        assert generate_diff(FILE1_JSON, FILE2_JSON) == result_content
-        assert generate_diff(FILE1_YAML, FILE2_YAML) == result_content
+@pytest.mark.parametrize("file1,file2,result", PARAMETRIZE_INPUT)
+def test_generate_diff(file1, file2, result):
+    with open(result) as result:
+        expected = result.read()
+        assert generate_diff(file1, file2) == expected

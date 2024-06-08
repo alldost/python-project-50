@@ -1,50 +1,43 @@
-
-
-def stylish(diff_list, level=1):
+def stylish(nodes, level):
     result = ''
+    spaces_number = 4
+    if level == 1:
+        result += '{\n'
+    else:
+        result += ' {\n'
 
-    def stylish_level(curr_list, curr_level):
-       level_result = ''
-       spaces_number = 4
-       level_result += '{\n'
+    for node in nodes:
+        key = node.get('key')
+        status = node.get('status')
 
-       for dict in curr_list:
-           children = dict.get('children')
+        match status:
+            case 'same' | None:
+                result += f'{level * spaces_number * " "}{key}:'
+            case 'removed':
+                result += f'{(level * spaces_number - 2) * " "}- {key}:'
+            case 'added':
+                result += f'{(level * spaces_number - 2) * " "}+ {key}:'
 
-           if children:
-               level_result += stylish_level(children, curr_level + level)
+        children = node.get('children')
+        if children:
+            result += stylish(children, level + 1) + '\n'
+        else:
+            result += change_format(node['value']) + '\n'
 
-           key = dict.get('key')
-           status = dict.get('status')
-           value = dict.get('value')
+    result += f'{spaces_number * (level - 1) * " "}' + '}'
 
-           match status:
-               case 'unchanged' | None:
-                   level_result += f'{curr_level * spaces_number * " "}{key}: '
-               case 'removed':
-                   level_result += f'{(curr_level * spaces_number - 2) * " "}- {key}: '
-               case 'added':
-                   level_result += f'{(curr_level * spaces_number - 2) * " "}+ {key}: '
-
-           level_result += change_format(value) + '\n'
-
-       level_result += f'{spaces_number * (curr_level - level) * " "}' + '}'
-
-       return level_result
-
-    result += stylish_level(diff_list, level)
     return result
 
 
 def change_format(value):
     match value:
         case True:
-            return 'true'
+            return ' true'
         case False:
-            return 'false'
-        #case '':
-        #    return None
+            return ' false'
+        case '':
+            return ''
         case None:
-            return 'null'
+            return ' null'
         case _:
-            return str(value)
+            return f' {str(value)}'
