@@ -9,7 +9,7 @@ def generate_diff(file1, file2, formater=None):
     if formater is None:
         formater = stylish
 
-    return formater(diff_list, 1)
+    return formater(diff_list)
 
 
 def compare(dict1, dict2):
@@ -21,26 +21,14 @@ def compare(dict1, dict2):
             value1 = dict1.get(key)
             value2 = dict2.get(key)
             if isinstance(value1, dict) and isinstance(value2, dict):
-                difference.append({'key': key, 'status': 'same',
+                difference.append({'key': key, 'status': 'nested',
                                    'children': compare(value1, value2)})
-            elif isinstance(value1, dict):
-                difference.append({'key': key, 'status': 'removed',
-                                   'children': walk(value1)})
-                difference.append({'key': key, 'status': 'added',
-                                   'value': value2})
-            elif isinstance(value2, dict):
-                difference.append({'key': key, 'status': 'removed',
-                                   'value': value1})
-                difference.append({'key': key, 'status': 'added',
-                                   'children': walk(value2)})
             elif value1 == value2:
                 difference.append({'key': key, 'status': 'same',
                                    'value': value1})
             else:
-                difference.append({'key': key, 'status': 'removed',
-                                   'value': value1})
-                difference.append({'key': key, 'status': 'added',
-                                   'value': value2})
+                difference.append({'key': key, 'status': 'updated',
+                                   'from': walk(value1), 'to': walk(value2)})
 
         elif key in dict1:
             value = dict1.get(key)
@@ -63,13 +51,15 @@ def compare(dict1, dict2):
     return difference
 
 
-def walk(dict_):
+def walk(item):
+    if not isinstance(item, dict):
+        return item
     result = []
-    for key, value in dict_.items():
-        entry_ = {'key': key}
+    for key, value in item.items():
+        dict_ = {'key': key}
         if not isinstance(value, dict):
-            result.append({'key': key, 'value': value})
+            dict_['value'] = value
         else:
-            entry_['children'] = walk(value)
-            result.append(entry_)
+            dict_['children'] = walk(value)
+        result.append(dict_)
     return result

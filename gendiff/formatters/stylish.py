@@ -1,28 +1,41 @@
-def stylish(nodes, level):
+def stylish(nodes, level=1):
     result = ''
     spaces_number = 4
-    if level == 1:
-        result += '{\n'
-    else:
-        result += ' {\n'
+    result += '{\n'
 
     for node in nodes:
         key = node.get('key')
         status = node.get('status')
+        updated_from = node.get('from')
+        updated_to = node.get('to')
 
-        match status:
-            case 'same' | None:
-                result += f'{level * spaces_number * " "}{key}:'
-            case 'removed':
-                result += f'{(level * spaces_number - 2) * " "}- {key}:'
-            case 'added':
-                result += f'{(level * spaces_number - 2) * " "}+ {key}:'
+        if status in ['same', None, 'nested']:
+            result += f'{level * spaces_number * " "}{key}: '
+        elif status == 'removed':
+            result += f'{(level * spaces_number - 2) * " "}- {key}: '
+        elif status == 'added':
+            result += f'{(level * spaces_number - 2) * " "}+ {key}: '
+        elif status == 'updated':
+            result += f'{(level * spaces_number - 2) * " "}- {key}: '
+            if isinstance(updated_from, list):
+                result += stylish(updated_from, level + 1) + '\n'
+            else:
+                result += change_format(updated_from)
+                result = result.rstrip() + '\n'
+            result += f'{(level * spaces_number - 2) * " "}+ {key}: '
+            if isinstance(updated_to, list):
+                result += stylish(updated_to, level + 1) + '\n'
+            else:
+                result += change_format(updated_to)
+                result = result.rstrip() + '\n'
 
         children = node.get('children')
+        value = node.get('value')
         if children:
             result += stylish(children, level + 1) + '\n'
-        else:
-            result += change_format(node['value']) + '\n'
+        if value is not None:
+            result += change_format(value)
+            result = result.rstrip() + '\n'
 
     result += f'{spaces_number * (level - 1) * " "}' + '}'
 
@@ -32,12 +45,12 @@ def stylish(nodes, level):
 def change_format(value):
     match value:
         case True:
-            return ' true'
+            return 'true'
         case False:
-            return ' false'
+            return 'false'
         case '':
             return ''
         case None:
-            return ' null'
+            return 'null'
         case _:
-            return f' {str(value)}'
+            return f'{str(value)}'
