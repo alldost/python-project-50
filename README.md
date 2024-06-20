@@ -33,5 +33,5 @@
 [![asciicast](https://asciinema.org/a/0eiTA1tY3q7XbOVjFD8KhIArL.svg)](https://asciinema.org/a/0eiTA1tY3q7XbOVjFD8KhIArL)
 
 
-Помимо утилиты пакет содержит модуль gendiff c функцией generate_diff(). Вызов этой функции возвращает строку с разницей между содержимым двух файлов:
+Помимо утилиты пакет содержит модуль gendiff c функцией generate_diff(). Вызов функции возвращает строку с разницей между содержимым двух файлов:
 [![asciicast](https://asciinema.org/a/kA4oekrZWcKRhKAr7EIzE7a8j.svg)](https://asciinema.org/a/kA4oekrZWcKRhKAr7EIzE7a8j)
