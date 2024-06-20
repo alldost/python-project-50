@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 import argparse
-from gendiff.formatters.plain import plain
-from gendiff.formatters.json_ import to_json
 from gendiff.generate_diff import generate_diff
 
 
@@ -16,13 +14,7 @@ def main():
                         help='set format of output')
     args = parser.parse_args()
 
-    if args.format == 'plain':
-        diff = generate_diff(args.first_file, args.second_file, plain)
-    elif args.format == 'json':
-        diff = generate_diff(args.first_file, args.second_file, to_json)
-    else:
-        diff = generate_diff(args.first_file, args.second_file)
-
+    diff = generate_diff(args.first_file, args.second_file, args.format)
     print(diff)
 
 

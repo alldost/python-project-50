@@ -21,13 +21,11 @@ def stylish(nodes, level=1):
                 result += stylish(updated_from, level + 1) + '\n'
             else:
                 result += change_format(updated_from) + '\n'
-                #result = result.rstrip() + '\n'
             result += f'{(level * spaces_number - 2) * " "}+ {key}: '
             if isinstance(updated_to, list):
                 result += stylish(updated_to, level + 1) + '\n'
             else:
                 result += change_format(updated_to) + '\n'
-                #result = result.rstrip() + '\n'
 
         children = node.get('children')
         value = node.get('value')
