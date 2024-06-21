@@ -4,7 +4,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/16005ca9e19412f1d11d/test_coverage)](https://codeclimate.com/github/alldost/python-project-50/test_coverage)
 [![Python CI](https://github.com/alldost/python-project-50/actions/workflows/python-app.yml/badge.svg)](https://github.com/alldost/python-project-50/actions)
 
-"Вычислитель отличий" представляет собой CLI-утилиту, которая сравнивает содержимое двух файлов и выводит информацию об изменениях во втором файле относительно первого.
+"Вычислитель отличий" представляет собой cli-утилиту, которая сравнивает содержимое двух файлов и выводит информацию об изменениях во втором файле относительно первого.
 Утилита вызывается командой gendiff, принимает на вход два обязательных аргумента - пути до сравниваемых файлов, и один опциональный - формат отоборажения результата.
 
 Минимальные требования для запуска:
