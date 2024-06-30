@@ -1,4 +1,4 @@
-from gendiff.formatters.stylish import change_format
+from gendiff.formatters.stylish import to_str
 
 
 def plain(nodes, curr_key=''):
@@ -40,13 +40,13 @@ def check_and_format(item):
     if isinstance(item, list):
         return '[complex value]'
     elif isinstance(item, dict):
-        return change_format(item['value'])
+        return to_str(item['value'])
     elif item is None:
         return 'null'
     elif isinstance(item, str):
-        return f"'{change_format(item)}'"
+        return f"'{to_str(item)}'"
     else:
-        return change_format(item)
+        return to_str(item)
 
 
 def make_key_view(key, current_key):

@@ -2,19 +2,17 @@ import json
 import yaml
 
 
-def parse(file1: str, file2: str):
+def parse(file):
 
-    if file1.endswith(".json"):
-        with open(file1) as f1, open(file2) as f2:
-            dict1 = json.load(f1)
-            dict2 = json.load(f2)
-            return dict1, dict2
+    if file.endswith(".json"):
+        with open(file) as f:
+            file_to_dict = json.load(f)
+            return file_to_dict
 
-    elif file1.endswith(".yaml") or file1.endswith(".yml"):
-        with open(file1) as f1, open(file2) as f2:
-            dict1 = yaml.safe_load(f1)
-            dict2 = yaml.safe_load(f2)
-            return dict1, dict2
+    elif file.endswith(".yaml") or file.endswith(".yml"):
+        with open(file) as f:
+            file_to_dict = yaml.safe_load(f)
+            return file_to_dict
 
     else:
         raise ValueError("Unsupported file format")

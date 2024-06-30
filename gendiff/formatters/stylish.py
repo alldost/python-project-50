@@ -20,19 +20,19 @@ def stylish(nodes, level=1):
             if isinstance(updated_from, list):
                 result += stylish(updated_from, level + 1) + '\n'
             else:
-                result += change_format(updated_from) + '\n'
+                result += to_str(updated_from) + '\n'
             result += f'{(level * spaces_number - 2) * " "}+ {key}: '
             if isinstance(updated_to, list):
                 result += stylish(updated_to, level + 1) + '\n'
             else:
-                result += change_format(updated_to) + '\n'
+                result += to_str(updated_to) + '\n'
 
         children = node.get('children')
         value = node.get('value')
         if children:
             result += stylish(children, level + 1) + '\n'
         if value is not None:
-            result += change_format(value)
+            result += to_str(value)
             result = result.rstrip() + '\n'
 
     result += f'{spaces_number * (level - 1) * " "}' + '}'
@@ -40,7 +40,7 @@ def stylish(nodes, level=1):
     return result
 
 
-def change_format(value):
+def to_str(value):
     match value:
         case True:
             return 'true'
