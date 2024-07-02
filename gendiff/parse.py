@@ -2,17 +2,22 @@ import json
 import yaml
 
 
-def parse(file):
-
+def get_extension(file):
     if file.endswith(".json"):
-        with open(file) as f:
-            file_to_dict = json.load(f)
-            return file_to_dict
-
+        extension = 'json'
     elif file.endswith(".yaml") or file.endswith(".yml"):
-        with open(file) as f:
-            file_to_dict = yaml.safe_load(f)
-            return file_to_dict
+        extension = 'yaml'
 
-    else:
-        raise ValueError("Unsupported file format")
+    with open(file, 'r') as f:
+        data = f.read()
+
+    return extension, data
+
+
+def parse(extension, data):
+    if extension == 'json':
+        data_dict = json.loads(data)
+    elif extension == 'yaml':
+        data_dict = yaml.safe_load(data)
+
+    return data_dict

@@ -1,3 +1,6 @@
+from gendiff.formatters.stringify import to_str
+
+
 def stylish(nodes, level=1):
     result = ''
     spaces_number = 4
@@ -38,17 +41,3 @@ def stylish(nodes, level=1):
     result += f'{spaces_number * (level - 1) * " "}' + '}'
 
     return result
-
-
-def to_str(value):
-    match value:
-        case True:
-            return 'true'
-        case False:
-            return 'false'
-        case '':
-            return ''
-        case None:
-            return 'null'
-        case _:
-            return f'{str(value)}'

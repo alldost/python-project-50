@@ -1,0 +1,12 @@
+def to_str(value):
+    match value:
+        case True:
+            return 'true'
+        case False:
+            return 'false'
+        case '':
+            return ''
+        case None:
+            return 'null'
+        case _:
+            return f'{str(value)}'

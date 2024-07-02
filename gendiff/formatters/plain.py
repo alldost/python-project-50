@@ -1,4 +1,4 @@
-from gendiff.formatters.stylish import to_str
+from gendiff.formatters.stringify import to_str
 
 
 def plain(nodes, curr_key=''):
