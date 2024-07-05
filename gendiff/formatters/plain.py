@@ -38,14 +38,17 @@ def to_str(item):
         return '[complex value]'
     elif isinstance(item, str):
         return f"'{item}'"
-    elif item is None:
-        return 'null'
-    elif item == True:
-        return 'true'
-    elif item == False:
-        return 'false'
-    else:
-        return f"{item}"
+    match item:
+        case True:
+            return 'true'
+        case False:
+            return 'false'
+        case '':
+            return ''
+        case None:
+            return 'null'
+        case _:
+            return f'{str(item)}'
 
 
 def make_key_view(key, current_key):
