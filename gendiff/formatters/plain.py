@@ -40,10 +40,12 @@ def to_str(item):
         return f"'{item}'"
     elif item is None:
         return 'null'
-    elif item:
+    elif item == True:
         return 'true'
-    else:
+    elif item == False:
         return 'false'
+    else:
+        return f"{item}"
 
 
 def make_key_view(key, current_key):
