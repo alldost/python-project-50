@@ -4,7 +4,7 @@ from gendiff.formatters.json_ import to_json
 
 
 def select_format(diff, formater):
-    if formater is None or formater == 'stylish':
+    if formater == 'stylish':
         formater = stylish
     elif formater == 'plain':
         formater = plain
